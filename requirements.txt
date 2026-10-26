@@ -1,0 +1,9 @@
+numpy
+pandas
+matplotlib
+seaborn
+scikit-learn
+ucimlrepo==0.0.7
+jupyterlab
+# Optional: used only by the profiling section of the notebook.
+ydata-profiling==4.18.4
