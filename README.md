@@ -25,15 +25,15 @@ Dataset attribution: J. R. Quinlan, *Credit Approval*, UCI Machine Learning Repo
 
 ## What I did
 
-1. **Loaded and inspected the dataset.** Retrieved features and targets through `ucimlrepo`, standardized the target name to `class`, and inspected feature dimensions and class counts.
-2. **Handled missing values.** Replaced `?` markers with missing values, filled categorical columns with their mode, and filled numeric columns with their median.
-3. **Encoded the inputs and target.** Applied `pd.get_dummies(..., drop_first=True)` to the features and mapped the target symbols to binary labels.
-4. **Created a stratified train/test split.** Held out 20% of the records while preserving class proportions.
-5. **Standardized the features.** Fitted `StandardScaler` on training features and transformed test features with the fitted scaler.
-6. **Trained five baseline classifiers.** Compared Logistic Regression, Decision Tree, Random Forest, Gradient Boosting, and SVM with probability estimation.
-7. **Tuned Gradient Boosting.** Used `GridSearchCV`, five-fold cross-validation, and F1 scoring to search 16 parameter combinations (80 fold fits, followed by refitting).
-8. **Evaluated model behavior.** Compared accuracy, precision, recall, F1, and ROC-AUC; plotted confusion matrices; and ran a separate train/test accuracy comparison including KNN.
-9. **Generated exploratory profiling.** Used `ydata-profiling` to export a `credit_report.html` report from the raw UCI file. The supplied notebook records successful export; the HTML file itself was not supplied.
+**Loaded and inspected the dataset.** Retrieved features and targets through `ucimlrepo`, standardized the target name to `class`, and inspected feature dimensions and class counts. **Handled missing values.** Replaced `?` markers with missing values, filled categorical columns with their mode, and filled numeric columns with their median.
+
+**Encoded the inputs and target.** Applied `pd.get_dummies(..., drop_first=True)` to the features and mapped the target symbols to binary labels. **Created a stratified train/test split.** Held out 20% of the records while preserving class proportions.
+
+**Standardized the features.** Fitted `StandardScaler` on training features and transformed test features with the fitted scaler. **Trained five baseline classifiers.** Compared Logistic Regression, Decision Tree, Random Forest, Gradient Boosting, and SVM with probability estimation.
+
+**Tuned Gradient Boosting.** Used `GridSearchCV`, five-fold cross-validation, and F1 scoring to search 16 parameter combinations (80 fold fits, followed by refitting). **Evaluated model behavior.** Compared accuracy, precision, recall, F1, and ROC-AUC; plotted confusion matrices; and ran a separate train/test accuracy comparison including KNN.
+
+**Generated exploratory profiling.** Used `ydata-profiling` to export a `credit_report.html` report from the raw UCI file. The supplied notebook records successful export; the HTML file itself was not supplied.
 
 ## Recorded baseline results
 
@@ -112,10 +112,9 @@ Alternatively, run `python analysis.py` to execute the exported classification w
 
 ## Evaluation and reproducibility notes
 
-- **Preprocessing leakage:** the original workflow imputes missing values and discovers one-hot categories before splitting the data. Imputation should instead be fitted within training folds using a pipeline before making stronger generalization claims. Scaling is fitted on the training subset, but is also performed outside the cross-validation folds.
-- **Run variability:** several baseline estimators do not specify `random_state`. Their results can change between runs; the recorded table is not a guarantee of identical future scores.
-- **Publication cleanup:** the English notebook removes redundant/out-of-order cells, adds the missing `cross_val_score` import, and consistently uses the existing scaled arrays. A duplicated confusion-matrix loop with Turkish labels was omitted; the original English baseline figures remain. The algorithms and reported historical scores were not replaced with new experiments.
-- **Validation performed for this edition:** Python code syntax, notebook structure, English text, result transcription, and local image links were checked. The full training and profiling workflow was not rerun. Dependency versions are mostly unpinned because a complete original environment lockfile was not supplied.
+Preprocessing leakage: the original workflow imputes missing values and discovers one-hot categories before splitting the data. Imputation should instead be fitted within training folds using a pipeline before making stronger generalization claims. Scaling is fitted on the training subset, but is also performed outside the cross-validation folds. Run variability: several baseline estimators do not specify `random_state`. Their results can change between runs; the recorded table is not a guarantee of identical future scores.
+
+Publication cleanup: the English notebook removes redundant/out-of-order cells, adds the missing `cross_val_score` import, and consistently uses the existing scaled arrays. A duplicated confusion-matrix loop with Turkish labels was omitted; the original English baseline figures remain. The algorithms and reported historical scores were not replaced with new experiments. Validation performed for this edition: Python code syntax, notebook structure, English text, result transcription, and local image links were checked. The full training and profiling workflow was not rerun. Dependency versions are mostly unpinned because a complete original environment lockfile was not supplied.
 
 This repository presents an educational classification experiment on historical anonymized data; it has not been evaluated as a real lending decision system.
 

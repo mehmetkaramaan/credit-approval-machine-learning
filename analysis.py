@@ -28,10 +28,6 @@ import warnings
 warnings.filterwarnings("ignore")
 
 
-
-
-
-
 def load_data():
     data = fetch_ucirepo(id=27)
     X = data.data.features
@@ -41,7 +37,7 @@ def load_data():
 
     df = pd.concat([X, y], axis=1)
 
-    # Standardize the target column name.
+
     df.rename(columns={df.columns[-1]: "class"}, inplace=True)
 
     return df
@@ -49,14 +45,14 @@ def load_data():
 def preprocess_data(df):
     print("Starting preprocessing...")
 
-    # Separate the target from the input features.
+
     y = df["class"].copy()
     X = df.drop("class", axis=1).copy()
 
-    # ? → NaN
+
     X = X.replace("?", np.nan)
 
-    # Impute missing categorical values with the mode and numeric values with the median.
+
     for col in X.columns:
         if X[col].dtype == "object":
             X[col] = X[col].fillna(X[col].mode()[0])
@@ -65,19 +61,19 @@ def preprocess_data(df):
 
     print("Shape after missing-value imputation:", X.shape)
 
-    # One-hot encode input features only.
+
     X = pd.get_dummies(X, drop_first=True)
 
     print("Shape after encoding:", X.shape)
 
-    # Clean and encode the target labels.
+
     y = y.astype(str).str.strip()
     y = y.map({"+": 1, "-": 0})
 
-    # Align target and feature indices.
+
     y = y.loc[X.index]
 
-    # Combine the processed features and target.
+
     df_final = pd.concat([X, y.rename("class")], axis=1)
 
     return df_final
@@ -219,11 +215,11 @@ def plot_train_test_accuracy(X_train, X_test, y_train, y_test):
 
         model.fit(X_train, y_train)
 
-        # TRAIN accuracy
+
         train_pred = model.predict(X_train)
         train_acc = accuracy_score(y_train, train_pred)
 
-        # TEST accuracy
+
         test_pred = model.predict(X_test)
         test_acc = accuracy_score(y_test, test_pred)
 
@@ -235,9 +231,7 @@ def plot_train_test_accuracy(X_train, X_test, y_train, y_test):
         print(f"Train Accuracy: {train_acc:.4f}")
         print(f"Test Accuracy : {test_acc:.4f}")
 
-    # ---------------------------
-    # PLOT (TRAIN vs TEST)
-    # ---------------------------
+
     plt.figure(figsize=(10,6))
 
     plt.plot(model_names, train_scores, marker='o', label="Train Accuracy")
